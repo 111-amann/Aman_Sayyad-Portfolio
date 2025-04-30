@@ -84,6 +84,36 @@ function Contact() {
             Send Message
           </button>
         </form>
+        <div className="mt-5 flex justify-center gap-3">
+          <a
+            href="https://github.com/111-amann"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <i className="ri-github-fill text-lg"></i>
+          </a>
+          <a
+            href="https://www.linkedin.com/in/aman-sayyad-5a8a322b0"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <i className="ri-linkedin-box-fill text-lg"></i>
+          </a>
+          <a
+            href="https://www.instagram.com/111_amann"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <i className="ri-instagram-line text-lg"></i>
+          </a>
+          <a
+            href="https://x.com/AmanSay35959827"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <i className="ri-twitter-x-line text-lg"></i>
+          </a>
+        </div>
       </RevealOnScroll>
     </section>
   );
