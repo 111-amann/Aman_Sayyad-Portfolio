@@ -1,4 +1,5 @@
 import React from "react";
+import RevealOnScroll from "../RevealOnScroll";
 
 function About() {
   const frontendSkills = [
@@ -16,6 +17,7 @@ function About() {
       id="about"
       className="min-h-screen flex justify-center items-center p-20"
     >
+      <RevealOnScroll>
       <div className="max-w-3xl am-auto px-4">
         <h2 className="text-3xl font-bold mb-8 bg-gradient-to-r from-blue-500 to-cyan-400 bg-clip-text text-transparent text-center">
           About Me
@@ -73,7 +75,7 @@ function About() {
             </ul>
           </div>
         </div>
-      </div>
+      </div></RevealOnScroll>
     </section>
   );
 }
