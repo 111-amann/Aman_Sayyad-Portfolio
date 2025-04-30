@@ -42,7 +42,7 @@ function Projects() {
               <div className="flex justify-right items-center my-4 gap-3">
                 <span className="text-blue-400 hover:text-blue-300 transition-colors">
                   View Project →
-                </span>
+                </span> 
                 <a
                   target="_blank"
                   href="https://github.com/111-amann/Popcornhub-React-Major-Project"

@@ -5,7 +5,7 @@ function About() {
   const frontendSkills = [
     "React",
     "Javascript",
-    "HTML",
+    "HTML", 
     "CSS",
     "TailwindCSS",
     "Bootstrap",
@@ -15,10 +15,10 @@ function About() {
   return (
     <section
       id="about"
-      className="min-h-screen flex justify-center items-center p-20"
+      className="min-h-screen flex justify-center items-center py-20"
     >
       <RevealOnScroll>
-      <div className="max-w-3xl am-auto px-4">
+      <div className="max-w-3xl mx-auto px-4">
         <h2 className="text-3xl font-bold mb-8 bg-gradient-to-r from-blue-500 to-cyan-400 bg-clip-text text-transparent text-center">
           About Me
         </h2>

@@ -35,7 +35,7 @@ function Contact() {
           Get In Touch
         </h2>
         <form className="space-y-6" onSubmit={handleSubmit}>
-          <div className="relative w-lg">
+          <div className="relative md:w-lg w-xs">
             <input
               type="text"
               id="name"
