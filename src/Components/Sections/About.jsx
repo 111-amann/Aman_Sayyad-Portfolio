@@ -25,7 +25,11 @@ function About() {
 
           <div className="rounded-xl p-8 border-white/10 border hover:-translate-y-1 transition-all">
             <p className="text-grey-300 mb-6">
+<<<<<<< HEAD
               Passionate developer with expertise in building scalable web
+=======
+              Pssionate developer with expertise in building scalable web
+>>>>>>> 93ef1f2 (Education update)
               applications and creating innovative solutions.
             </p>
 
@@ -36,7 +40,11 @@ function About() {
                   {frontendSkills.map((tech, key) => (
                     <span
                       key={key}
+<<<<<<< HEAD
                       className="bg-blue-500/10 text-blue-500 py-1 px-3 rounded-full text-sm hover:bg-blue-500/20 hover:shadow-[0_2px_8px_rgba(59,130,246,0.2)] transition"
+=======
+                      className="bg-blue-500/10 text-blue-500 py-1 px-3 rounded-full text-sm hover:bg-blue-500/20 hover:shadow-[0_2px_8px_rgba(59, 130, 246, 0.2)] transition"
+>>>>>>> 93ef1f2 (Education update)
                     >
                       {tech}
                     </span>
@@ -50,7 +58,11 @@ function About() {
                   {backendSkills.map((tech, key) => (
                     <span
                       key={key}
+<<<<<<< HEAD
                       className="bg-blue-500/10 text-blue-500 py-1 px-3 rounded-full text-sm hover:bg-blue-500/20 hover:shadow-[0_2px_8px_rgba(59,130,246,0.2)] transition"
+=======
+                      className="bg-blue-500/10 text-blue-500 py-1 px-3 rounded-full text-sm hover:bg-blue-500/20 hover:shadow-[0_2px_8px_rgba(59, 130, 246, 0.2)] transition"
+>>>>>>> 93ef1f2 (Education update)
                     >
                       {tech}
                     </span>
@@ -60,9 +72,13 @@ function About() {
             </div>
           </div>
 
+<<<<<<< HEAD
           {/* Education + Courses + Volunteering */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-8">
             {/* Education */}
+=======
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-8">
+>>>>>>> 93ef1f2 (Education update)
             <div className="p-6 rounded-xl border border-white/10 hover:-translate-y-1 transition-all">
               <h3 className="text-xl font-bold mb-4">🏫 Education</h3>
               <ul className="list-disc list-inside text-grey-300 space-y-2">
@@ -70,11 +86,19 @@ function About() {
                   <strong>BSC in Computer Science</strong> - Savitribai Phule
                   Pune University. <br /> GPA: 8.49 &nbsp; (2021 - 2024)
                 </li>
+<<<<<<< HEAD
+=======
+                {/* <li>
+                Relevant Coursework: Web Development, Data Structures, Operating
+                System, Computer Networks.
+              </li> */}
+>>>>>>> 93ef1f2 (Education update)
                 <li>
                   <strong>MCA</strong> - Sanjivani University. <br /> (2025 -
                   2027)
                 </li>
                 <li>
+<<<<<<< HEAD
                   Relevant Coursework: Data Structures, Machine Learning, Agile
                   Methodologies, Web Development, Operating Systems, Computer
                   Networks.
@@ -83,6 +107,13 @@ function About() {
             </div>
 
             {/* Courses */}
+=======
+                  Relevant Coursework: Data Structures, Machine Learning, Agile Methedologies, Web Development, Operating
+                  System, Computer Networks.
+                </li>
+              </ul>
+            </div>
+>>>>>>> 93ef1f2 (Education update)
             <div className="p-6 rounded-xl border border-white/10 hover:-translate-y-1 transition-all">
               <h3 className="text-xl font-bold mb-4">📙 Courses</h3>
               <ul className="list-disc list-inside text-grey-300 space-y-2">
@@ -91,6 +122,7 @@ function About() {
                   <br /> (Jun 2024 - Dec 2024)
                 </li>
                 <li>
+<<<<<<< HEAD
                   Relevant Coursework: HTML, CSS, Javascript, React, NodeJS,
                   ExpressJS, MongoDB.
                 </li>
@@ -113,6 +145,9 @@ function About() {
                   Coordinating placement activities, bridging between students
                   and companies, and guiding peers for career readiness.
                   (2025 - Present)
+=======
+                  Relevant Coursework: HTML, CSS, Javascript, React, NodeJS, ExpressJS, MongoDB.
+>>>>>>> 93ef1f2 (Education update)
                 </li>
               </ul>
             </div>
