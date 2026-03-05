@@ -15,6 +15,13 @@ pipeline {
             }
         }
 
+        stage('Configure Git') {
+            steps {
+                bat 'git config --global user.email "aman@example.com"'
+                bat 'git config --global user.name "Aman Jenkins"'
+            }
+        }
+
         stage('Deploy to GitHub Pages') {
             steps {
                 bat 'npm run deploy'
