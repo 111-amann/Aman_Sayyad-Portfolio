@@ -9,9 +9,15 @@ pipeline {
             }
         }
 
-        stage('Build React App') {
+        stage('Build Project') {
             steps {
                 bat 'npm run build'
+            }
+        }
+
+        stage('Deploy to GitHub Pages') {
+            steps {
+                bat 'npm run deploy'
             }
         }
 
