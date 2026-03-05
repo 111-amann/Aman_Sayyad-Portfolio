@@ -9,16 +9,10 @@ pipeline {
             }
         }
 
-        stage('Build Project') {
-            steps {
-                bat 'npm run build'
-            }
-        }
-
         stage('Configure Git') {
             steps {
-                bat 'git config --global user.email "aman@example.com"'
-                bat 'git config --global user.name "Aman Jenkins"'
+                bat 'git config --global user.email "111-amann@users.noreply.github.com"'
+                bat 'git config --global user.name "Aman CI"'
             }
         }
 
