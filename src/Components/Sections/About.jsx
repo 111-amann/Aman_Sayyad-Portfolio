@@ -114,6 +114,13 @@ function About() {
                   and companies, and guiding peers for career readiness.
                   (2025 - Present)
                 </li>
+                <li>
+                  <strong>Training & Placement Coordinator</strong> - MCA
+                  Department <br />
+                  Coordinating placement activities, bridging between students
+                  and companies, and guiding peers for career readiness.
+                  (2025 - Present)
+                </li>
               </ul>
             </div>
           </div>
