@@ -5,12 +5,13 @@ function About() {
   const frontendSkills = [
     "React",
     "Javascript",
+    "Redux",
     "HTML",
     "CSS",
     "TailwindCSS",
     "Bootstrap",
   ];
-  const backendSkills = ["Node.js", "Express.js", "MongoDB", "Redux"];
+  const backendSkills = ["Node.js", "Express.js", "MongoDB", "SQL", "Java"];
 
   return (
     <section
@@ -45,7 +46,7 @@ function About() {
               </div>
 
               <div className="rounded-xl p-6 hover:-translate-y-1 transition-all">
-                <h3 className="text-xl font-bold mb-4">Backend</h3>
+                <h3 className="text-xl font-bold mb-4">Backend & Languages</h3>
                 <div className="flex flex-wrap gap-2">
                   {backendSkills.map((tech, key) => (
                     <span
@@ -68,16 +69,15 @@ function About() {
               <ul className="list-disc list-inside text-grey-300 space-y-2">
                 <li>
                   <strong>BSC in Computer Science</strong> - Savitribai Phule
-                  Pune University. <br /> GPA: 8.49 &nbsp; (2021 - 2024)
+                  Pune University. <br /> CGPA: 8.49 &nbsp; (2021 - 2024)
                 </li>
                 <li>
-                  <strong>MCA</strong> - Sanjivani University. <br /> (2025 -
-                  2027)
+                  <strong>MCA</strong> - Sanjivani University. <br /> CGPA: 8.41
+                  &nbsp; (2025 - 2027)
                 </li>
                 <li>
-                  Relevant Coursework: Data Structures, Machine Learning, Agile
-                  Methodologies, Web Development, Operating Systems, Computer
-                  Networks.
+                  Relevant Coursework: Data Structures, Agile Methodologies,
+                  Operating Systems, Computer Networks.
                 </li>
               </ul>
             </div>
@@ -99,22 +99,32 @@ function About() {
 
             {/* Volunteering */}
             <div className="p-6 rounded-xl border border-white/10 hover:-translate-y-1 transition-all md:col-span-2">
-              <h3 className="text-xl font-bold mb-4">🤝 Volunteering</h3>
+              <h3 className="text-xl font-bold mb-4">
+                🤝 Leadership & Activities
+              </h3>
+
               <ul className="list-disc list-inside text-grey-300 space-y-2">
                 <li>
                   <strong>Google Student Ambassador</strong> <br />
                   Represented Sanjivani University, organizing workshops,
                   awareness sessions, and helping students adopt Google tools.
-                  (2025 - Present)
+                  (Jun 2025 - Dec 2025)
                 </li>
+
                 <li>
-                  <strong>Training & Placement Coordinator</strong> - MCA
-                  Department <br />
-                  Coordinating placement activities, bridging between students
-                  and companies, and guiding peers for career readiness.
-                  (2025 - Present)
+                  <strong>Ohayou Japan Festival 2025 Event Coordinator</strong>{" "}
+                  <br />
+                  Coordinated cultural exchange activities, workshops, and event
+                  logistics while facilitating engagement between students,
+                  faculty, and international guests.
                 </li>
-                
+
+                <li>
+                  <strong>Mission Exploit CTF Volunteer</strong> <br />
+                  Supported the Department of Cyber Security in organizing a
+                  cybersecurity Capture The Flag (CTF) competition, assisting
+                  with event coordination and participant management.
+                </li>
               </ul>
             </div>
           </div>
