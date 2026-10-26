@@ -1,8 +1,18 @@
 // src/data/projectsData.js
 
+export const projectCategories = [
+  "All",
+  "Full Stack",
+  "Frontend",
+  "API / Utility",
+];
+
 export const projects = [
   {
+    id: "talentiq",
     title: "Talent IQ — Code Together",
+    category: "Full Stack",
+    featured: true,
     description:
       "A real-time collaborative coding interview platform where developers can practice together with live video calls, shared code editing, code execution, and instant chat. Features secure authentication, session management, LeetCode-style problems, and a webhook-driven user sync pipeline.",
     tech: [
@@ -22,7 +32,10 @@ export const projects = [
   },
 
   {
+    id: "popcornhub",
     title: "Popcornhub",
+    category: "Frontend",
+    featured: true,
     description:
       "A responsive movie streaming web app built with React and Redux Toolkit. It uses the TMDB API to fetch movie data and features infinite scrolling, video playback, category filtering, and Axios integration. Styled with Tailwind CSS.",
     tech: [
@@ -34,13 +47,15 @@ export const projects = [
       "React Player",
       "React Infinite Scroll",
     ],
-    github:
-      "https://github.com/111-amann/Popcornhub-React-Major-Project",
+    github: "https://github.com/111-amann/Popcornhub-React-Major-Project",
     live: "https://popcornhub-self.vercel.app/",
   },
 
   {
+    id: "ecommerce-store",
     title: "E-commerce Store",
+    category: "Full Stack",
+    featured: true,
     description:
       "A React-based e-commerce application that allows users to browse products, filter them by categories, and perform CRUD operations. Product data is fetched from the FakeStore API and managed through localStorage, with React Toastify providing real-time notifications.",
     tech: [
@@ -55,7 +70,10 @@ export const projects = [
   },
 
   {
+    id: "refokus",
     title: "Refokus",
+    category: "Frontend",
+    featured: true,
     description:
       "A visually engaging clone of the Refokus website built using React, Locomotive Scroll, and Framer Motion. Focused on smooth scroll effects, modern animations, and responsive design.",
     tech: [
@@ -70,7 +88,10 @@ export const projects = [
   },
 
   {
+    id: "obys-agency",
     title: "Obys Agency",
+    category: "Frontend",
+    featured: false,
     description:
       "A creative portfolio-style website replicating the Obys agency site. Built using HTML, CSS, JavaScript, and GSAP for smooth animations and transitions. Emphasizes a modern, interactive layout with creative motion effects.",
     tech: [
@@ -87,7 +108,10 @@ export const projects = [
   },
 
   {
+    id: "gta-vi",
     title: "GTA VI Website",
+    category: "Frontend",
+    featured: false,
     description:
       "A visually dynamic GTA VI concept site built with React, TailwindCSS, and GSAP. Features AI-generated backgrounds and character images with smooth scroll-based animations.",
     tech: ["React", "TailwindCSS", "GSAP", "Remix Icon"],
@@ -96,21 +120,22 @@ export const projects = [
   },
 
   {
+    id: "barber-shop",
     title: "Fama Barber Shop",
+    category: "Frontend",
+    featured: false,
     description:
       "A clean, modern, and fully responsive barber shop website showcasing services, pricing, and contact information. Built with React, Tailwind CSS, and Remix Icon with a focus on user-friendly design and responsiveness.",
-    tech: [
-      "React",
-      "TailwindCSS",
-      "Remix Icon",
-      "Vite",
-    ],
+    tech: ["React", "TailwindCSS", "Remix Icon", "Vite"],
     github: "https://github.com/111-amann/Barber-Shop",
     live: "https://111-amann.github.io/Barber-Shop/",
   },
 
   {
+    id: "weather-app",
     title: "Weather App",
+    category: "API / Utility",
+    featured: false,
     description:
       "A simple and user-friendly weather app built with HTML, CSS, and JavaScript using the OpenWeather API. Displays real-time weather information based on user input.",
     tech: ["HTML", "CSS", "JavaScript", "OpenWeather API"],
@@ -119,7 +144,10 @@ export const projects = [
   },
 
   {
+    id: "todo-app",
     title: "Todo App",
+    category: "API / Utility",
+    featured: false,
     description:
       "A clean and responsive task manager built with HTML, CSS, and JavaScript. Users can add, delete, and mark tasks as complete. Designed for easy daily task tracking with a user-friendly interface.",
     tech: ["HTML", "CSS", "JavaScript"],

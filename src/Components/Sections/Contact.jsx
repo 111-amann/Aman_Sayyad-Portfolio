@@ -1,120 +1,283 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import RevealOnScroll from "../RevealOnScroll";
 import emailjs from "emailjs-com";
 
 function Contact() {
+  const formRef = useRef(null);
+
   const [formData, setFormData] = useState({
     name: "",
     email: "",
     message: "",
   });
 
+  const [submissionStatus, setSubmissionStatus] = useState("idle"); // 'idle' | 'submitting' | 'success' | 'error'
+  const [statusFeedback, setStatusFeedback] = useState("");
+
   const handleSubmit = (e) => {
     e.preventDefault();
+
+    // Prevent duplicate triggers if already submitting
+    if (submissionStatus === "submitting") return;
+
+    // Basic validation check
+    if (!formData.name.trim() || !formData.email.trim() || !formData.message.trim()) {
+      setSubmissionStatus("error");
+      setStatusFeedback("Please fill out all required fields.");
+      return;
+    }
+
+    setSubmissionStatus("submitting");
+    setStatusFeedback("");
+
     emailjs
       .sendForm(
         import.meta.env.VITE_SERVICE_ID,
         import.meta.env.VITE_TEMPLATE_ID,
-        e.target,
+        formRef.current,
         import.meta.env.VITE_PUBLIC_KEY
       )
-      .then((result) => {
-        alert("Message Sent!");
+      .then(() => {
+        setSubmissionStatus("success");
+        setStatusFeedback(
+          "Thank you! Your message has been sent successfully. I'll get back to you shortly."
+        );
         setFormData({ name: "", email: "", message: "" });
       })
-      .catch(() => alert("Oops! Something went wrong. Please try again."));
+      .catch(() => {
+        setSubmissionStatus("error");
+        setStatusFeedback(
+          "Unable to send message at this moment. Please check your connection or reach out directly via LinkedIn."
+        );
+      });
   };
 
   return (
-    <section
-      id="contact"
-      className="min-h-screen flex justify-center items-center"
-    >
-      <RevealOnScroll>
-        <h2 className="text-3xl font-bold mb-8 bg-gradient-to-r from-blue-500 to-cyan-400 bg-clip-text text-transparent text-center">
-          Get In Touch
-        </h2>
-        <form className="space-y-6" onSubmit={handleSubmit}>
-          <div className="relative md:w-lg w-xs">
-            <input
-              type="text"
-              id="name"
-              name="name"
-              required
-              value={formData.name}
-              onChange={(e) =>
-                setFormData({ ...formData, name: e.target.value })
-              }
-              className="w-full bg-white/5 border border-white/10 rounded px-4 py-3 text-white transition focus:outline-none focus:border-blue-500 focus:bg-blue-500/5"
-              placeholder="Name..."
-            />
+    <section id="contact" className="py-24 px-4 sm:px-6 relative bg-[#090D16]/50">
+      <div className="max-w-6xl mx-auto">
+        <RevealOnScroll>
+          {/* Section Header */}
+          <div className="mb-14 text-left">
+            <div className="inline-flex items-center gap-2 text-xs font-mono uppercase tracking-wider text-sky-400 mb-2">
+              <span className="w-1.5 h-1.5 rounded-full bg-sky-400"></span>
+              <span>06 &bull; Get In Touch</span>
+            </div>
+            <h2 className="text-3xl sm:text-4xl font-display font-bold text-white tracking-tight">
+              Start a Conversation
+            </h2>
+            <div className="mt-3 w-16 h-0.5 bg-gradient-to-r from-sky-400 to-indigo-500 rounded-full"></div>
           </div>
-          <div className="relative">
-            <input
-              type="email"
-              id="email"
-              name="email"
-              required
-              value={formData.email}
-              onChange={(e) =>
-                setFormData({ ...formData, email: e.target.value })
-              }
-              className="w-full bg-white/5 border border-white/10 rounded px-4 py-3 text-white transition focus:outline-none focus:border-blue-500 focus:bg-blue-500/5"
-              placeholder="example@gmail.com"
-            />
+
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
+            {/* Left Column: Direct Info & Channels (5 cols) */}
+            <div className="lg:col-span-5 space-y-6">
+              <p className="text-slate-300 text-base leading-relaxed">
+                Whether you have an open software developer role, want to discuss
+                a potential project, or simply want to connect—my inbox is always open.
+              </p>
+
+              {/* Status Indicator */}
+              <div className="p-5 rounded-xl border border-slate-800 bg-[#111827]/90 flex items-start gap-4">
+                <div className="w-9 h-9 rounded-lg bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 flex items-center justify-center text-lg shrink-0 mt-0.5">
+                  <i className="ri-checkbox-circle-line"></i>
+                </div>
+                <div>
+                  <h4 className="text-sm font-semibold text-white mb-1">
+                    Current Availability
+                  </h4>
+                  <p className="text-xs text-slate-400 leading-relaxed">
+                    Open to full-time Software Developer roles, frontend engineering positions, and select freelance opportunities.
+                  </p>
+                </div>
+              </div>
+
+              {/* Social Channels List */}
+              <div className="space-y-3 pt-2">
+                <h4 className="text-xs font-mono uppercase tracking-wider text-slate-400 mb-3">
+                  Direct Profiles &amp; Networks
+                </h4>
+
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                  <a
+                    href="https://www.linkedin.com/in/aman-sayyad-5a8a322b0"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center gap-3 p-3 rounded-lg border border-slate-800 bg-[#111827] hover:border-sky-400 hover:text-white text-slate-300 transition-colors"
+                  >
+                    <i className="ri-linkedin-box-fill text-sky-400 text-xl"></i>
+                    <span className="text-xs font-mono">LinkedIn Profile</span>
+                  </a>
+
+                  <a
+                    href="https://github.com/111-amann"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center gap-3 p-3 rounded-lg border border-slate-800 bg-[#111827] hover:border-sky-400 hover:text-white text-slate-300 transition-colors"
+                  >
+                    <i className="ri-github-fill text-slate-200 text-xl"></i>
+                    <span className="text-xs font-mono">GitHub Repos</span>
+                  </a>
+
+                  <a
+                    href="https://x.com/AmanSay35959827"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center gap-3 p-3 rounded-lg border border-slate-800 bg-[#111827] hover:border-sky-400 hover:text-white text-slate-300 transition-colors"
+                  >
+                    <i className="ri-twitter-x-line text-slate-200 text-lg"></i>
+                    <span className="text-xs font-mono">Twitter / X</span>
+                  </a>
+
+                  <a
+                    href="https://www.instagram.com/111_amann"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center gap-3 p-3 rounded-lg border border-slate-800 bg-[#111827] hover:border-sky-400 hover:text-white text-slate-300 transition-colors"
+                  >
+                    <i className="ri-instagram-line text-pink-400 text-xl"></i>
+                    <span className="text-xs font-mono">Instagram</span>
+                  </a>
+                </div>
+              </div>
+            </div>
+
+            {/* Right Column: Contact Form (7 cols) */}
+            <div className="lg:col-span-7">
+              <div className="p-6 sm:p-8 rounded-2xl border border-slate-800 bg-[#111827]/90 shadow-xl backdrop-blur-sm">
+                <h3 className="text-lg font-display font-semibold text-white mb-1">
+                  Send a Message
+                </h3>
+                <p className="text-xs text-slate-400 mb-6 font-mono">
+                  Powered by EmailJS &bull; Delivered straight to my inbox
+                </p>
+
+                {/* Accessible Feedback Toast Banner */}
+                {submissionStatus === "success" && (
+                  <div
+                    role="status"
+                    aria-live="polite"
+                    className="mb-6 p-4 rounded-lg bg-emerald-500/10 border border-emerald-500/30 text-emerald-300 text-sm flex items-start gap-3"
+                  >
+                    <i className="ri-checkbox-circle-fill text-lg shrink-0 mt-0.5"></i>
+                    <div className="flex-1">
+                      <p className="font-semibold">Message Dispatched</p>
+                      <p className="text-xs text-emerald-400/90 mt-0.5">
+                        {statusFeedback}
+                      </p>
+                    </div>
+                  </div>
+                )}
+
+                {submissionStatus === "error" && (
+                  <div
+                    role="alert"
+                    aria-live="assertive"
+                    className="mb-6 p-4 rounded-lg bg-rose-500/10 border border-rose-500/30 text-rose-300 text-sm flex items-start gap-3"
+                  >
+                    <i className="ri-error-warning-fill text-lg shrink-0 mt-0.5"></i>
+                    <div className="flex-1">
+                      <p className="font-semibold">Transmission Notice</p>
+                      <p className="text-xs text-rose-400/90 mt-0.5">
+                        {statusFeedback}
+                      </p>
+                    </div>
+                  </div>
+                )}
+
+                <form ref={formRef} onSubmit={handleSubmit} className="space-y-5">
+                  {/* Name field */}
+                  <div>
+                    <label
+                      htmlFor="name"
+                      className="block text-xs font-mono text-slate-300 mb-1.5"
+                    >
+                      Your Name <span className="text-sky-400">*</span>
+                    </label>
+                    <input
+                      type="text"
+                      id="name"
+                      name="name"
+                      required
+                      value={formData.name}
+                      onChange={(e) =>
+                        setFormData({ ...formData, name: e.target.value })
+                      }
+                      placeholder="e.g. Alex Morgan"
+                      disabled={submissionStatus === "submitting"}
+                      className="w-full px-4 py-3 rounded-lg bg-[#0B0F19] border border-slate-800 text-slate-100 placeholder-slate-500 text-sm focus:outline-none focus:border-sky-400 focus:ring-1 focus:ring-sky-400 transition-colors disabled:opacity-50"
+                    />
+                  </div>
+
+                  {/* Email field */}
+                  <div>
+                    <label
+                      htmlFor="email"
+                      className="block text-xs font-mono text-slate-300 mb-1.5"
+                    >
+                      Your Email Address <span className="text-sky-400">*</span>
+                    </label>
+                    <input
+                      type="email"
+                      id="email"
+                      name="email"
+                      required
+                      value={formData.email}
+                      onChange={(e) =>
+                        setFormData({ ...formData, email: e.target.value })
+                      }
+                      placeholder="alex@company.com"
+                      disabled={submissionStatus === "submitting"}
+                      className="w-full px-4 py-3 rounded-lg bg-[#0B0F19] border border-slate-800 text-slate-100 placeholder-slate-500 text-sm focus:outline-none focus:border-sky-400 focus:ring-1 focus:ring-sky-400 transition-colors disabled:opacity-50"
+                    />
+                  </div>
+
+                  {/* Message field */}
+                  <div>
+                    <label
+                      htmlFor="message"
+                      className="block text-xs font-mono text-slate-300 mb-1.5"
+                    >
+                      Message Content <span className="text-sky-400">*</span>
+                    </label>
+                    <textarea
+                      id="message"
+                      name="message"
+                      rows={5}
+                      required
+                      value={formData.message}
+                      onChange={(e) =>
+                        setFormData({ ...formData, message: e.target.value })
+                      }
+                      placeholder="Hi Aman, I'd like to discuss an opportunity..."
+                      disabled={submissionStatus === "submitting"}
+                      className="w-full px-4 py-3 rounded-lg bg-[#0B0F19] border border-slate-800 text-slate-100 placeholder-slate-500 text-sm focus:outline-none focus:border-sky-400 focus:ring-1 focus:ring-sky-400 transition-colors resize-y disabled:opacity-50"
+                    />
+                  </div>
+
+                  {/* Submit Button with Loading State & Prevention of double submission */}
+                  <button
+                    type="submit"
+                    disabled={submissionStatus === "submitting"}
+                    className="w-full flex items-center justify-center gap-2 py-3.5 px-6 rounded-lg text-sm font-medium text-slate-950 bg-sky-400 hover:bg-sky-300 disabled:bg-slate-700 disabled:text-slate-400 disabled:cursor-not-allowed transition-all transform hover:-translate-y-0.5 shadow-sm shadow-sky-500/20 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sky-400"
+                  >
+                    {submissionStatus === "submitting" ? (
+                      <>
+                        <span className="w-4 h-4 border-2 border-slate-950 border-t-transparent rounded-full animate-spin"></span>
+                        <span>Transmitting Message...</span>
+                      </>
+                    ) : (
+                      <>
+                        <span>Send Message</span>
+                        <i className="ri-send-plane-fill text-base"></i>
+                      </>
+                    )}
+                  </button>
+                </form>
+              </div>
+            </div>
           </div>
-          <div className="relative">
-            <textarea
-              id="message"
-              name="message"
-              rows={5}
-              required
-              value={formData.message}
-              onChange={(e) =>
-                setFormData({ ...formData, message: e.target.value })
-              }
-              className="w-full bg-white/5 border border-white/10 rounded px-4 py-3 text-white transition focus:outline-none focus:border-blue-500 focus:bg-blue-500/5"
-              placeholder="Your Message..."
-            />
-          </div>
-          <button
-            type="submit"
-            className="w-full bg-blue-500 text-white py-3 px-6 rounded font-medium transition relative overflow-hidden hover:-translate-y-0.5 hover:shadow[0_0_15px_rgba(59,130,246,0.4)]"
-          >
-            Send Message
-          </button>
-        </form>
-        <div className="mt-5 flex justify-center gap-3">
-          <a
-            href="https://github.com/111-amann"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <i className="ri-github-fill text-lg"></i>
-          </a>
-          <a
-            href="https://www.linkedin.com/in/aman-sayyad-5a8a322b0"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <i className="ri-linkedin-box-fill text-lg"></i>
-          </a>
-          <a
-            href="https://www.instagram.com/111_amann"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <i className="ri-instagram-line text-lg"></i>
-          </a>
-          <a
-            href="https://x.com/AmanSay35959827"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <i className="ri-twitter-x-line text-lg"></i>
-          </a>
-        </div>
-      </RevealOnScroll>
+        </RevealOnScroll>
+      </div>
     </section>
   );
 }

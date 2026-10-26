@@ -1,4 +1,4 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import { Routes, Route } from "react-router-dom";
 import { LoadingScreen } from "./Components/LoadingScreen";
 import "./index.css";
@@ -7,8 +7,12 @@ import Navbar from "./Components/Sections/Navbar";
 import MobileMenu from "./Components/MobileMenu";
 import Home from "./Components/Sections/Home";
 import About from "./Components/Sections/About";
+import Experience from "./Components/Sections/Experience";
 import Projects from "./Components/Sections/Projects";
+import Skills from "./Components/Sections/Skills";
+import Education from "./Components/Sections/Education";
 import Contact from "./Components/Sections/Contact";
+import Footer from "./Components/Sections/Footer";
 import ProjectsPage from "./Components/Sections/ProjectsPage";
 
 function Portfolio() {
@@ -18,10 +22,16 @@ function Portfolio() {
     <>
       <Navbar menuOpen={menuOpen} setMenuOpen={setMenuOpen} />
       <MobileMenu menuOpen={menuOpen} setMenuOpen={setMenuOpen} />
-      <Home />
-      <About />
-      <Projects />
-      <Contact />
+      <main>
+        <Home />
+        <About />
+        <Experience />
+        <Projects />
+        <Skills />
+        <Education />
+        <Contact />
+      </main>
+      <Footer />
     </>
   );
 }
@@ -36,7 +46,7 @@ function App() {
       <div
         className={`min-h-screen transition-opacity duration-700 ${
           isLoaded ? "opacity-100" : "opacity-0"
-        } bg-black text-grey-100`}
+        } bg-[#090D16] text-[#F3F4F6] selection:bg-sky-500/20 selection:text-white`}
       >
         <Routes>
           <Route path="/" element={<Portfolio />} />

@@ -1,11 +1,16 @@
-import { useEffect } from "react";
-import { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 export const LoadingScreen = ({ onComplete }) => {
   const [text, setText] = useState("");
-  const fullText = "<Hello World />";
+  const fullText = "aman.sayyad ~ init";
 
   useEffect(() => {
+    // If user prefers reduced motion, bypass immediately
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      onComplete();
+      return;
+    }
+
     let index = 0;
     const interval = setInterval(() => {
       setText(fullText.substring(0, index));
@@ -13,25 +18,56 @@ export const LoadingScreen = ({ onComplete }) => {
 
       if (index > fullText.length) {
         clearInterval(interval);
-
         setTimeout(() => {
           onComplete();
-        }, 1000);
+        }, 500);
       }
-    }, 100);
+    }, 45);
 
-    return () => clearInterval(interval);
-  },[onComplete]);
+    const handleKeyDown = (e) => {
+      if (e.key === "Escape" || e.key === "Enter" || e.key === " ") {
+        clearInterval(interval);
+        onComplete();
+      }
+    };
+    window.addEventListener("keydown", handleKeyDown);
+
+    return () => {
+      clearInterval(interval);
+      window.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [onComplete]);
 
   return (
-    <div className="fixed inset-0 z-50 bg-black text-gray-100 flex flex-col items-center justify-center">
-      <div className="mb-4 text-3xl md:text-4xl font-mono font-bold">
-        {text} <span className="animate-blink ml-1">|</span>
+    <div
+      role="status"
+      aria-live="polite"
+      className="fixed inset-0 z-50 bg-[#090D16] text-gray-100 flex flex-col items-center justify-center select-none"
+    >
+      <div className="flex items-center space-x-2 text-xs font-mono text-slate-400 mb-3 tracking-widest uppercase">
+        <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+        <span>Environment Loading</span>
       </div>
 
-      <div className="relative rounded w-[200px] h-[2px] bg-grey-800 overflow-hidden">
-        <div className="w-[40%] h-full bg-blue-500 shadow-[0_0_15px_#3b82f6] animate-loading-bar"></div>
+      <div className="mb-6 text-2xl md:text-3xl font-mono font-medium text-slate-200">
+        <span className="text-sky-400">&gt; </span>
+        {text}
+        <span className="animate-blink ml-1 text-sky-400">_</span>
       </div>
+
+      <div className="relative rounded-full w-52 h-1 bg-slate-800/80 overflow-hidden">
+        <div className="w-[45%] h-full bg-gradient-to-r from-sky-400 to-indigo-500 rounded-full animate-loading-bar"></div>
+      </div>
+
+      <button
+        onClick={onComplete}
+        className="mt-8 text-xs font-mono text-slate-500 hover:text-slate-300 transition-colors focus:outline-none focus:underline"
+        aria-label="Skip intro animation"
+      >
+        [Click or press Esc to skip]
+      </button>
     </div>
   );
 };
+
+export default LoadingScreen;

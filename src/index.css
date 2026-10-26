@@ -1,50 +1,120 @@
 @import "tailwindcss";
 
-html,
-body {
-  margin: 0;
-  padding: 0;
+@layer base {
+  :root {
+    --bg-main: #090d16;
+    --surface-card: #111827;
+    --surface-hover: #1e293b;
+    --border-subtle: rgba(255, 255, 255, 0.08);
+    --border-accent: rgba(56, 189, 248, 0.3);
+    --accent-cyan: #38bdf8;
+    --accent-indigo: #6366f1;
+    --text-primary: #f3f4f6;
+    --text-secondary: #9ca3af;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    background-color: #090d16;
+    color: #f3f4f6;
+    font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  }
+
+  body {
+    margin: 0;
+    padding: 0;
+    background-color: #090d16;
+    color: #f3f4f6;
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* Custom scrollbar */
+  ::-webkit-scrollbar {
+    width: 8px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: #090d16;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: #1f2937;
+    border-radius: 4px;
+    border: 2px solid #090d16;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: #374151;
+  }
+
+  ::selection {
+    background: rgba(56, 189, 248, 0.25);
+    color: #ffffff;
+  }
+}
+
+.font-display {
   font-family: "Space Grotesk", sans-serif;
-  background: #0a0a0a;
-  color: #f3f4f6;
 }
 
-@layer utilities {
-  @keyframes blink {
-    0%,
-    100% {
-      opacity: 1;
-    }
-    50% {
-      opacity: 0;
-    }
-  }
+.font-mono-code {
+  font-family: "JetBrains Mono", monospace;
+}
 
-  .animate-blink {
-    animation: blink 0.8s step-end infinite;
+/* Animations */
+@keyframes blink {
+  0%, 100% {
+    opacity: 1;
   }
-
-  @keyframes loading {
-    0% {
-      transform: translateX(-100%);
-    }
-    100% {
-      transform: translateX(250%);
-    }
-  }
-
-  .animate-loading-bar {
-    animation: loading 0.8s ease infinite;
+  50% {
+    opacity: 0;
   }
 }
 
+.animate-blink {
+  animation: blink 0.8s step-end infinite;
+}
+
+@keyframes loading {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(250%);
+  }
+}
+
+.animate-loading-bar {
+  animation: loading 0.8s ease infinite;
+}
+
+/* Scroll reveal utility */
 .reveal {
   opacity: 0;
-  transform: translateY(20px);
-  transition: opacity 0.7s ease, transform 0.7s ease;
+  transform: translateY(18px);
+  transition: opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1), transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: opacity, transform;
 }
 
 .reveal.visible {
   opacity: 1;
   transform: translateY(0);
+}
+
+/* Respect user's reduced motion preferences */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto !important;
+  }
+  *, ::before, ::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+  .reveal {
+    opacity: 1 !important;
+    transform: none !important;
+  }
 }
