@@ -25,3 +25,4 @@ jobs:
         run: npm run build:gh-pages
         env:
           VITE_BASE_PATH: /Aman_Sayyad-Portfolio
+          VITE_VERIFY_EMAIL_URL: https://aman-sayyad-portfolio.vercel.app/api/validate-email
