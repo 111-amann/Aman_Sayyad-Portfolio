@@ -23,6 +23,9 @@ export default defineConfig(({ mode }) => {
         },
       },
     ],
-    base: "/Aman_Sayyad-Portfolio/",
+    base:
+    mode === "github-pages"
+      ? "/Aman_Sayyad-Portfolio/"
+      : "/",
   };
 });
