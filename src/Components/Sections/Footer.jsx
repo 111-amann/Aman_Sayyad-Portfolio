@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 function Footer() {
   const currentYear = new Date().getFullYear();
@@ -14,7 +15,7 @@ function Footer() {
         {/* Left: Brand & Copyright */}
         <div className="flex flex-col items-center md:items-start text-center md:text-left gap-1">
           <a
-            href="#home"
+            href="/#home"
             className="font-mono text-base font-semibold text-white hover:text-sky-400 transition-colors"
           >
             aman<span className="text-sky-400">.sayyad</span>
@@ -26,24 +27,27 @@ function Footer() {
 
         {/* Center: Quick Links */}
         <div className="flex flex-wrap items-center justify-center gap-6 text-xs font-mono text-slate-400">
-          <a href="#about" className="hover:text-white transition-colors">
+          <a href="/#about" className="hover:text-white transition-colors">
             About
           </a>
-          <a href="#experience" className="hover:text-white transition-colors">
+          <a href="/#experience" className="hover:text-white transition-colors">
             Experience
           </a>
-          <a href="#projects" className="hover:text-white transition-colors">
+          <a href="/#projects" className="hover:text-white transition-colors">
             Projects
           </a>
-          <a href="#skills" className="hover:text-white transition-colors">
+          <a href="/#skills" className="hover:text-white transition-colors">
             Skills
           </a>
-          <a href="#education" className="hover:text-white transition-colors">
+          <a href="/#education" className="hover:text-white transition-colors">
             Education
           </a>
-          <a href="#contact" className="hover:text-white transition-colors">
+          <a href="/#contact" className="hover:text-white transition-colors">
             Contact
           </a>
+          <Link to="/projects" className="text-sky-400 hover:text-sky-300 transition-colors">
+            All Projects
+          </Link>
           <a
             href={resumeUrl}
             download="AmanSayyadResume.pdf"

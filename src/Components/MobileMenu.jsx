@@ -14,12 +14,12 @@ function MobileMenu({ menuOpen, setMenuOpen }) {
   }, [menuOpen, setMenuOpen]);
 
   const navLinks = [
-    { label: "About", href: "#about" },
-    { label: "Experience", href: "#experience" },
-    { label: "Projects", href: "#projects" },
-    { label: "Skills", href: "#skills" },
-    { label: "Education", href: "#education" },
-    { label: "Contact", href: "#contact" },
+    { label: "About", href: "/#about" },
+    { label: "Experience", href: "/#experience" },
+    { label: "Projects", href: "/#projects" },
+    { label: "Skills", href: "/#skills" },
+    { label: "Education", href: "/#education" },
+    { label: "Contact", href: "/#contact" },
   ];
 
   return (
@@ -36,7 +36,7 @@ function MobileMenu({ menuOpen, setMenuOpen }) {
       {/* Top Header inside Menu */}
       <div className="flex justify-between items-center pb-4 border-b border-slate-800">
         <a
-          href="#home"
+          href="/#home"
           onClick={() => setMenuOpen(false)}
           className="font-mono text-lg font-semibold text-white"
         >

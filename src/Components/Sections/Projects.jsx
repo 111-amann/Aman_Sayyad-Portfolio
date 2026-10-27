@@ -1,84 +1,59 @@
-import React, { useState } from "react";
+import React from "react";
+import { Link } from "react-router-dom";
 import RevealOnScroll from "../RevealOnScroll";
-import { projects, projectCategories } from "../../data/projectsData";
+import { projects } from "../../data/projectsData";
 import ProjectCard from "../ProjectCard";
 
-function Projects() {
-  const [activeCategory, setActiveCategory] = useState("All");
+// The 3 premier showcase projects displayed on the home page:
+// 1. Talent IQ — Collaborative full-stack coding platform with Monaco editor & live video
+// 2. Popcornhub — Modern streaming frontend with Redux Toolkit & TMDB API integration
+// 3. Refokus — Advanced animation & interaction design clone with Framer Motion & Locomotive Scroll
+const FEATURED_HOME_PROJECT_IDS = ["talentiq", "popcornhub", "refokus"];
 
-  const filteredProjects =
-    activeCategory === "All"
-      ? projects
-      : projects.filter((project) => project.category === activeCategory);
+function Projects() {
+  const homeProjects = FEATURED_HOME_PROJECT_IDS.map((id) =>
+    projects.find((p) => p.id === id)
+  ).filter(Boolean);
+
+  // Fallback to first 3 projects if IDs ever change
+  const displayProjects =
+    homeProjects.length === 3 ? homeProjects : projects.slice(0, 3);
 
   return (
     <section id="projects" className="py-24 px-4 sm:px-6 relative">
       <div className="max-w-6xl mx-auto">
         <RevealOnScroll>
           {/* Section Header */}
-          <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-6">
-            <div>
-              <div className="inline-flex items-center gap-2 text-xs font-mono uppercase tracking-wider text-sky-400 mb-2">
-                <span className="w-1.5 h-1.5 rounded-full bg-sky-400"></span>
-                <span>03 &bull; Engineering Work</span>
-              </div>
-              <h2 className="text-3xl sm:text-4xl font-display font-bold text-white tracking-tight">
-                Featured Projects &amp; Explorer
-              </h2>
-              <div className="mt-3 w-16 h-0.5 bg-gradient-to-r from-sky-400 to-indigo-500 rounded-full"></div>
+          <div className="mb-12 text-left">
+            <div className="inline-flex items-center gap-2 text-xs font-mono uppercase tracking-wider text-sky-400 mb-2">
+              <span className="w-1.5 h-1.5 rounded-full bg-sky-400"></span>
+              <span>03 &bull; Featured Work</span>
             </div>
-
-            {/* Category Filter Buttons */}
-            <div
-              role="group"
-              aria-label="Filter projects by category"
-              className="flex flex-wrap items-center gap-2"
-            >
-              {projectCategories.map((cat) => {
-                const count =
-                  cat === "All"
-                    ? projects.length
-                    : projects.filter((p) => p.category === cat).length;
-                const isActive = activeCategory === cat;
-
-                return (
-                  <button
-                    key={cat}
-                    type="button"
-                    onClick={() => setActiveCategory(cat)}
-                    aria-pressed={isActive}
-                    className={`inline-flex items-center gap-2 px-3.5 py-1.5 rounded-lg text-xs font-mono transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sky-400 ${
-                      isActive
-                        ? "bg-sky-400 text-slate-950 font-semibold shadow-sm shadow-sky-500/20"
-                        : "bg-[#111827] text-slate-400 border border-slate-800 hover:text-white hover:border-slate-700"
-                    }`}
-                  >
-                    <span>{cat}</span>
-                    <span
-                      className={`text-[10px] px-1.5 py-0.2 rounded-full ${
-                        isActive
-                          ? "bg-slate-950/20 text-slate-950"
-                          : "bg-slate-800 text-slate-400"
-                      }`}
-                    >
-                      {count}
-                    </span>
-                  </button>
-                );
-              })}
-            </div>
+            <h2 className="text-3xl sm:text-4xl font-display font-bold text-white tracking-tight">
+              Featured Projects
+            </h2>
+            <div className="mt-3 w-16 h-0.5 bg-gradient-to-r from-sky-400 to-indigo-500 rounded-full"></div>
+            <p className="text-slate-400 text-sm mt-3 max-w-xl">
+              A curated selection of full-stack platforms and modern web applications.
+            </p>
           </div>
 
-          {/* Projects Grid */}
+          {/* 3 Featured Projects Grid */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {filteredProjects.map((project) => (
-              <ProjectCard key={project.title} project={project} />
+            {displayProjects.map((project) => (
+              <ProjectCard key={project.id || project.title} project={project} />
             ))}
           </div>
 
-          {/* Explorer Footnote */}
-          <div className="mt-12 text-center text-xs font-mono text-slate-400">
-            <span>Showing {filteredProjects.length} of {projects.length} verified projects</span>
+          {/* View More Projects Action Button */}
+          <div className="mt-12 flex justify-center">
+            <Link
+              to="/projects"
+              className="group inline-flex items-center gap-2.5 px-6 py-3.5 rounded-xl text-sm font-mono font-medium text-slate-950 bg-sky-400 hover:bg-sky-300 transition-all duration-200 transform hover:-translate-y-0.5 shadow-sm shadow-sky-500/20 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sky-400"
+            >
+              <span>View More Projects</span>
+              <i className="ri-arrow-right-line text-base transition-transform duration-200 group-hover:translate-x-1"></i>
+            </Link>
           </div>
         </RevealOnScroll>
       </div>

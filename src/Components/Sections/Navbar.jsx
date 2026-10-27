@@ -13,7 +13,7 @@ function Navbar({ menuOpen, setMenuOpen }) {
         <div className="flex justify-between items-center h-16">
           {/* Logo / Monogram */}
           <a
-            href="#home"
+            href="/#home"
             className="flex items-center space-x-2 font-mono text-lg font-semibold tracking-tight text-white hover:text-sky-400 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sky-400 rounded px-1"
           >
             <span className="w-2 h-2 rounded-full bg-sky-400"></span>
@@ -28,37 +28,37 @@ function Navbar({ menuOpen, setMenuOpen }) {
             aria-label="Main Navigation"
           >
             <a
-              href="#about"
+              href="/#about"
               className="hover:text-white transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sky-400 rounded px-2 py-1"
             >
               About
             </a>
             <a
-              href="#experience"
+              href="/#experience"
               className="hover:text-white transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sky-400 rounded px-2 py-1"
             >
               Experience
             </a>
             <a
-              href="#projects"
+              href="/#projects"
               className="hover:text-white transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sky-400 rounded px-2 py-1"
             >
               Projects
             </a>
             <a
-              href="#skills"
+              href="/#skills"
               className="hover:text-white transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sky-400 rounded px-2 py-1"
             >
               Skills
             </a>
             <a
-              href="#education"
+              href="/#education"
               className="hover:text-white transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sky-400 rounded px-2 py-1"
             >
               Education
             </a>
             <a
-              href="#contact"
+              href="/#contact"
               className="hover:text-white transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sky-400 rounded px-2 py-1"
             >
               Contact
