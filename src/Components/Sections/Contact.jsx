@@ -11,24 +11,123 @@ function Contact() {
     message: "",
   });
 
-  const [submissionStatus, setSubmissionStatus] = useState("idle"); // 'idle' | 'submitting' | 'success' | 'error'
+  const [submissionStatus, setSubmissionStatus] = useState("idle"); // 'idle' | 'verifying' | 'submitting' | 'success' | 'error'
   const [statusFeedback, setStatusFeedback] = useState("");
 
-  const handleSubmit = (e) => {
+  const isProcessing =
+    submissionStatus === "verifying" || submissionStatus === "submitting";
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Prevent duplicate triggers if already submitting
-    if (submissionStatus === "submitting") return;
+    // Prevent duplicate triggers if already verifying or submitting
+    if (isProcessing) return;
 
-    // Basic validation check
-    if (!formData.name.trim() || !formData.email.trim() || !formData.message.trim()) {
+    const trimmedName = formData.name.trim();
+    const trimmedEmail = formData.email.trim();
+    const trimmedMessage = formData.message.trim();
+
+    // 1. Basic validation check: all fields required
+    if (!trimmedName || !trimmedEmail || !trimmedMessage) {
       setSubmissionStatus("error");
       setStatusFeedback("Please fill out all required fields.");
       return;
     }
 
-    setSubmissionStatus("submitting");
+    // 2. Client-side email format validation
+    const emailFormatRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailFormatRegex.test(trimmedEmail)) {
+      setSubmissionStatus("error");
+      setStatusFeedback("Invalid email, please enter a valid email address.");
+      return;
+    }
+
+    // 3. Email verification phase
+    setSubmissionStatus("verifying");
     setStatusFeedback("");
+
+    const verifyUrl =
+      import.meta.env.VITE_VERIFY_EMAIL_URL || "/api/validate-email";
+
+    let verificationResult;
+    try {
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 10000);
+
+      const response = await fetch(verifyUrl, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email: trimmedEmail }),
+        signal: controller.signal,
+      });
+
+      clearTimeout(timeoutId);
+
+      if (!response.ok) {
+        if (response.status === 400) {
+          setSubmissionStatus("error");
+          setStatusFeedback("Invalid email, please enter a valid email address.");
+          return;
+        }
+
+        setSubmissionStatus("error");
+        setStatusFeedback(
+          "Email verification is temporarily unavailable. Please try again later."
+        );
+        return;
+      }
+
+      verificationResult = await response.json();
+    } catch {
+      setSubmissionStatus("error");
+      setStatusFeedback(
+        "Email verification is temporarily unavailable. Please try again later."
+      );
+      return;
+    }
+
+    // 4. Interpret Abstract API response fields
+    if (verificationResult?.unavailable) {
+      setSubmissionStatus("error");
+      setStatusFeedback(
+        "Email verification is temporarily unavailable. Please try again later."
+      );
+      return;
+    }
+
+    const {
+      isValid,
+      status,
+      isFormatValid,
+      isMxValid,
+      isSmtpValid,
+    } = verificationResult || {};
+
+    // Explicitly invalid or undeliverable
+    if (
+      status === "undeliverable" ||
+      isFormatValid === false ||
+      isMxValid === false ||
+      isSmtpValid === false
+    ) {
+      setSubmissionStatus("error");
+      setStatusFeedback("Invalid email, please enter a valid email address.");
+      return;
+    }
+
+    // Inconclusive status (e.g. risky, unknown, or not confirmed deliverable)
+    if (status === "risky" || status === "unknown" || !isValid) {
+      setSubmissionStatus("error");
+      setStatusFeedback(
+        "We could not verify this email address. Please double-check your email address for typos and try again."
+      );
+      return;
+    }
+
+    // 5. Validation succeeded -> Submit form via EmailJS
+    setSubmissionStatus("submitting");
 
     emailjs
       .sendForm(
@@ -203,7 +302,7 @@ function Contact() {
                         setFormData({ ...formData, name: e.target.value })
                       }
                       placeholder="e.g. Alex Morgan"
-                      disabled={submissionStatus === "submitting"}
+                      disabled={isProcessing}
                       className="w-full px-4 py-3 rounded-lg bg-[#0B0F19] border border-slate-800 text-slate-100 placeholder-slate-500 text-sm focus:outline-none focus:border-sky-400 focus:ring-1 focus:ring-sky-400 transition-colors disabled:opacity-50"
                     />
                   </div>
@@ -226,7 +325,7 @@ function Contact() {
                         setFormData({ ...formData, email: e.target.value })
                       }
                       placeholder="alex@company.com"
-                      disabled={submissionStatus === "submitting"}
+                      disabled={isProcessing}
                       className="w-full px-4 py-3 rounded-lg bg-[#0B0F19] border border-slate-800 text-slate-100 placeholder-slate-500 text-sm focus:outline-none focus:border-sky-400 focus:ring-1 focus:ring-sky-400 transition-colors disabled:opacity-50"
                     />
                   </div>
@@ -249,7 +348,7 @@ function Contact() {
                         setFormData({ ...formData, message: e.target.value })
                       }
                       placeholder="Hi Aman, I'd like to discuss an opportunity..."
-                      disabled={submissionStatus === "submitting"}
+                      disabled={isProcessing}
                       className="w-full px-4 py-3 rounded-lg bg-[#0B0F19] border border-slate-800 text-slate-100 placeholder-slate-500 text-sm focus:outline-none focus:border-sky-400 focus:ring-1 focus:ring-sky-400 transition-colors resize-y disabled:opacity-50"
                     />
                   </div>
@@ -257,10 +356,15 @@ function Contact() {
                   {/* Submit Button with Loading State & Prevention of double submission */}
                   <button
                     type="submit"
-                    disabled={submissionStatus === "submitting"}
+                    disabled={isProcessing}
                     className="w-full flex items-center justify-center gap-2 py-3.5 px-6 rounded-lg text-sm font-medium text-slate-950 bg-sky-400 hover:bg-sky-300 disabled:bg-slate-700 disabled:text-slate-400 disabled:cursor-not-allowed transition-all transform hover:-translate-y-0.5 shadow-sm shadow-sky-500/20 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sky-400"
                   >
-                    {submissionStatus === "submitting" ? (
+                    {submissionStatus === "verifying" ? (
+                      <>
+                        <span className="w-4 h-4 border-2 border-slate-950 border-t-transparent rounded-full animate-spin"></span>
+                        <span>Verifying email...</span>
+                      </>
+                    ) : submissionStatus === "submitting" ? (
                       <>
                         <span className="w-4 h-4 border-2 border-slate-950 border-t-transparent rounded-full animate-spin"></span>
                         <span>Transmitting Message...</span>
