@@ -22,4 +22,6 @@ jobs:
         run: npm install
 
       - name: Build project
-        run: npm run build -- --mode github-pages
+        run: npm run build:gh-pages
+        env:
+          VITE_BASE_PATH: /Aman_Sayyad-Portfolio

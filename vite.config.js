@@ -10,6 +10,19 @@ export default defineConfig(({ mode }) => {
     process.env.ABSTRACT_API_KEY = env.ABSTRACT_API_KEY;
   }
 
+  // Base path resolution:
+  // 1. Explicit VITE_BASE_PATH environment variable (e.g. "/Aman_Sayyad-Portfolio")
+  // 2. Build mode "github-pages" -> "/Aman_Sayyad-Portfolio/"
+  // 3. Default for Vercel and local dev -> "/"
+  const rawBasePath =
+    env.VITE_BASE_PATH ||
+    (mode === "github-pages" ? "/Aman_Sayyad-Portfolio" : "/");
+
+  const assetBase =
+    rawBasePath === "/"
+      ? "/"
+      : `/${rawBasePath.replace(/^\/+|\/+$/g, "")}/`;
+
   return {
     plugins: [
       react(),
@@ -23,9 +36,6 @@ export default defineConfig(({ mode }) => {
         },
       },
     ],
-    base:
-    mode === "github-pages"
-      ? "/Aman_Sayyad-Portfolio/"
-      : "/",
+    base: assetBase,
   };
 });
