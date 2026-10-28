@@ -129,26 +129,44 @@ function Contact() {
     // 5. Validation succeeded -> Submit form via EmailJS
     setSubmissionStatus("submitting");
 
-    emailjs
-      .sendForm(
-        import.meta.env.VITE_SERVICE_ID,
-        import.meta.env.VITE_TEMPLATE_ID,
+    const serviceId = import.meta.env.VITE_SERVICE_ID;
+    const templateId = import.meta.env.VITE_TEMPLATE_ID;
+    const publicKey = import.meta.env.VITE_PUBLIC_KEY;
+
+    if (!serviceId || !templateId || !publicKey) {
+      setSubmissionStatus("error");
+      setStatusFeedback(
+        "Email service configuration is missing. Please reach out directly via LinkedIn."
+      );
+      return;
+    }
+
+    if (!formRef.current) {
+      setSubmissionStatus("error");
+      setStatusFeedback(
+        "Unable to send message at this moment. Please check your connection or reach out directly via LinkedIn."
+      );
+      return;
+    }
+
+    try {
+      await emailjs.sendForm(
+        serviceId,
+        templateId,
         formRef.current,
-        import.meta.env.VITE_PUBLIC_KEY
-      )
-      .then(() => {
-        setSubmissionStatus("success");
-        setStatusFeedback(
-          "Thank you! Your message has been sent successfully. I'll get back to you shortly."
-        );
-        setFormData({ name: "", email: "", message: "" });
-      })
-      .catch(() => {
-        setSubmissionStatus("error");
-        setStatusFeedback(
-          "Unable to send message at this moment. Please check your connection or reach out directly via LinkedIn."
-        );
-      });
+        publicKey
+      );
+      setSubmissionStatus("success");
+      setStatusFeedback(
+        "Thank you! Your message has been sent successfully. I'll get back to you shortly."
+      );
+      setFormData({ name: "", email: "", message: "" });
+    } catch {
+      setSubmissionStatus("error");
+      setStatusFeedback(
+        "Unable to send message at this moment. Please check your connection or reach out directly via LinkedIn."
+      );
+    }
   };
 
   return (
@@ -302,8 +320,8 @@ function Contact() {
                         setFormData({ ...formData, name: e.target.value })
                       }
                       placeholder="e.g. Alex Morgan"
-                      disabled={isProcessing}
-                      className="w-full px-4 py-3 rounded-lg bg-[#0B0F19] border border-slate-800 text-slate-100 placeholder-slate-500 text-sm focus:outline-none focus:border-sky-400 focus:ring-1 focus:ring-sky-400 transition-colors disabled:opacity-50"
+                      readOnly={isProcessing}
+                      className="w-full px-4 py-3 rounded-lg bg-[#0B0F19] border border-slate-800 text-slate-100 placeholder-slate-500 text-sm focus:outline-none focus:border-sky-400 focus:ring-1 focus:ring-sky-400 transition-colors read-only:opacity-60 read-only:cursor-not-allowed"
                     />
                   </div>
 
@@ -325,8 +343,8 @@ function Contact() {
                         setFormData({ ...formData, email: e.target.value })
                       }
                       placeholder="alex@company.com"
-                      disabled={isProcessing}
-                      className="w-full px-4 py-3 rounded-lg bg-[#0B0F19] border border-slate-800 text-slate-100 placeholder-slate-500 text-sm focus:outline-none focus:border-sky-400 focus:ring-1 focus:ring-sky-400 transition-colors disabled:opacity-50"
+                      readOnly={isProcessing}
+                      className="w-full px-4 py-3 rounded-lg bg-[#0B0F19] border border-slate-800 text-slate-100 placeholder-slate-500 text-sm focus:outline-none focus:border-sky-400 focus:ring-1 focus:ring-sky-400 transition-colors read-only:opacity-60 read-only:cursor-not-allowed"
                     />
                   </div>
 
@@ -348,8 +366,8 @@ function Contact() {
                         setFormData({ ...formData, message: e.target.value })
                       }
                       placeholder="Hi Aman, I'd like to discuss an opportunity..."
-                      disabled={isProcessing}
-                      className="w-full px-4 py-3 rounded-lg bg-[#0B0F19] border border-slate-800 text-slate-100 placeholder-slate-500 text-sm focus:outline-none focus:border-sky-400 focus:ring-1 focus:ring-sky-400 transition-colors resize-y disabled:opacity-50"
+                      readOnly={isProcessing}
+                      className="w-full px-4 py-3 rounded-lg bg-[#0B0F19] border border-slate-800 text-slate-100 placeholder-slate-500 text-sm focus:outline-none focus:border-sky-400 focus:ring-1 focus:ring-sky-400 transition-colors resize-y read-only:opacity-60 read-only:cursor-not-allowed"
                     />
                   </div>
 
